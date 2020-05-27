@@ -18,9 +18,9 @@ namespace MengeCS
             _agents = new List<Agent>();
         }
 
-        public bool Initialize(String behaveXml, String sceneXml, String model)
+        public bool Initialize(String behaveXml, String sceneXml, String model, String pluginPath)
         {
-            if (MengeWrapper.InitSimulator(behaveXml, sceneXml, model, null))
+            if (MengeWrapper.InitSimulator(behaveXml, sceneXml, model, pluginPath))
             {
                 FindTriggers();
                 uint count = MengeWrapper.AgentCount();
@@ -38,13 +38,18 @@ namespace MengeCS
                     agt._radius = MengeWrapper.GetAgentRadius(i);
                     _agents.Add(agt);
                 }
-                    return true;
+                return true;
             }
             else
             {
                 System.Console.WriteLine("Failed to initialize simulator.");
             }
             return false;
+        }
+
+        public bool Initialize(String behaveXml, String sceneXml, String model)
+        {
+            return Initialize(behaveXml, sceneXml, model, null);
         }
 
         /// <summary>
